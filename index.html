@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Christmas Celebration</title>
+
+  <style>
+    /* ===== RESET ===== */
+    :focus,
+:focus-visible {
+  outline: none;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    /* ===== CENTER BUTTON ===== */
+    .center-wrap {
+      position: relative;
+      z-index: 10;
+    }
+
+    button {
+      padding: 18px 34px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      color: #0a0f0d;
+      background: linear-gradient(135deg, #ffdf8c, #ffb703);
+      box-shadow:
+        0 0px 30px rgba(255, 183, 3, 0.35),
+        inset 0 2px 0 rgba(255,255,255,0.4);
+      transition: all 0.4s ease;
+      color: white;
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.41);
+    }
+
+    button:active {
+      transform: scale(0.95);
+      box-shadow:
+        0 6px 18px rgba(255, 183, 3, 0.3),
+        inset 0 2px 0 rgba(255,255,255,0.4);
+    }
+
+    /* ===== PARTICLES ===== */
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: fly 1.2s ease-out forwards;
+    }
+
+    @keyframes fly {
+      from {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translate(var(--x), var(--y)) scale(0.2);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+    
+  <div class="center-wrap">
+    <button id="celebrateBtn">MARRY CHRISTMAS</button>
+  </div>
+
+  <script>
+    const btn = document.getElementById("celebrateBtn");
+    const colors = [
+      "#ff595e", // red
+      "#ffca3a", // gold
+      "#8ac926", // green
+      "#ffffff", // snow
+      "#ffd166"  // warm yellow
+    ];
+
+    btn.addEventListener("click", (e) => {
+      const rect = btn.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      for (let i = 0; i < 40; i++) {
+        createParticle(centerX, centerY);
+      }
+    });
+
+    function createParticle(x, y) {
+      const particle = document.createElement("div");
+      particle.className = "particle";
+
+      const angle = Math.random() * Math.PI * 2;
+      const distance = Math.random() * 180 + 40;
+
+      particle.style.left = x + "px";
+      particle.style.top = y + "px";
+      particle.style.background =
+        colors[Math.floor(Math.random() * colors.length)];
+
+      particle.style.setProperty("--x", Math.cos(angle) * distance + "px");
+      particle.style.setProperty("--y", Math.sin(angle) * distance + "px");
+
+      document.body.appendChild(particle);
+
+      setTimeout(() => {
+        particle.remove();
+      }, 1200);
+    }
+  </script>
+
+</body>
+</html>
